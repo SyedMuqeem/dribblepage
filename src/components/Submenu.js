@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react'
+import { FaChevronDown, FaChevronRight } from 'react-icons/fa';
 import {Link } from "react-router-dom";
 import styled from 'styled-components'
 
@@ -11,7 +12,7 @@ const SidebarLink = styled(Link)`
     padding: 10px;
     color: white;
     list-style:none;
-    height:60px;
+    height:40px;
     text-decoration: none;
     font-size: 18px;
 
@@ -23,7 +24,7 @@ const SidebarLink = styled(Link)`
 
 `;
 const Dropdownlink = styled(Link)`
-    background: #633c70;
+    background: rgba(19, 19, 50, 0.9);
     height:60px;
     padding-left:3rem;
     padding-top:1rem;
@@ -39,7 +40,7 @@ const Dropdownlink = styled(Link)`
         }
 `;
 
-const sidebarLable = styled.span`
+const SidebarLable = styled.span`
     margin-left : 0px;
     
 `;
@@ -52,14 +53,15 @@ const Submenu = ({item}) => {
         <>
             <SidebarLink to="#" onClick={item.Smenu && showSubnav}>
                 <div>
-                    {item.icons}
-                    <sidebarLable>{item.pname}</sidebarLable>
+                    {/* {item.icons} */}
+                    <i className={item.icons}></i>
+                    <SidebarLable>{item.pname}</SidebarLable>
                 </div>
                 <div>
                     {item.Smenu && subnav 
-                    ? item.iconOpened 
+                    ?  <FaChevronDown/>
                     : item.Smenu
-                    ?item.iconClosed
+                    ?<FaChevronRight/>
                     :null}
                 </div>
             </SidebarLink>
@@ -67,7 +69,7 @@ const Submenu = ({item}) => {
                 return(
                     <Dropdownlink to={item.url} key={index}>
                         {item.icon}
-                        <sidebarLable>{item.sname}</sidebarLable>
+                        <SidebarLable>{item.sname}</SidebarLable>
                     </Dropdownlink>
                 )
             })}

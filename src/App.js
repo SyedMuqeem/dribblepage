@@ -9,6 +9,7 @@ import {
 import './App.css';
 import Login from './Screens/Login';
 import MainDashboard from './Screens/MainDashboard';
+import Daycalender from './components/Daycalender';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
                                 </Route>
                                 <Route exact path="/dashboard">
                                       <MainDashboard/>
+                                </Route>
+                                <Route exact path="/daycalender">
+                                      <Daycalender/>
                                 </Route>
                                 
                                 

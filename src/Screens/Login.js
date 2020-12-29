@@ -13,6 +13,7 @@ const Login = () => {
     const [fname, setFname] = useState("")
     const [userid, setUserid] = useState("")
     const [loading, setLoading] = useState("");
+    const [image, setImage] = useState("")
 
 //functions
         const login =() => {
@@ -28,6 +29,7 @@ const Login = () => {
                                         setToken(data.data?.token);
                                         setFname(data.data?.fname);
                                         setUserid(data.data?.userid);
+                                        setImage(data.data?.image?.image);
                                         setLoading(data.status)
                             } catch (e){
                                 console.log(e);
@@ -49,7 +51,7 @@ const Login = () => {
     return (
         <>
             {loading===200 ? (
-                <MainDashboard token={token} fname={fname} userid={userid}/>
+                <MainDashboard token={token} fname={fname} userid={userid} image={image}/>
             ):(
                 <div className="sign">
                 <div className="loginimage"><img src="dribbleimage.png" alt="pic" height="100%"/></div>

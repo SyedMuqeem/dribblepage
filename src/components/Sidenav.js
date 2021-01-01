@@ -65,7 +65,7 @@ const Sidenav = ({token,userid,fname,image}) => {
     const hitapi =() => {
     const FetchDetails = async () => {
         try{
-            const data= await Axios.put("http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/show/menu",{
+            const data= await Axios.put("https://api.perisync.com/show/menu",{
                 "token": token,
                 "userid":userid,
                 "type":"WEB"

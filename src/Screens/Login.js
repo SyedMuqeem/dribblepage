@@ -1,9 +1,15 @@
 import Axios from 'axios'
 import React, { useState } from 'react'
+// redux
+import { connect } from 'react-redux'
+// 
 import { Link } from 'react-router-dom'
+import { changeName } from '../action/changeName'
 import MainDashboard from './MainDashboard'
+// context
+export const PackageContext = React.createContext();
 
-const Login = () => {
+const Login = (props) => {
 
     //states
     const [details, setDetails] = useState({
@@ -14,14 +20,21 @@ const Login = () => {
     const [userid, setUserid] = useState("")
     const [loading, setLoading] = useState("");
     const [image, setImage] = useState("")
+    // context data
+    const [mission, setMission] = useState({
+        token: token,
+        fname: "",
+        userid: userid,
+        image: image,
+        loading:""
+    })
 
 //functions
         const login =() => {
 
-
             const FetchDetails = async () => {
                             try{
-                                const data= await Axios.put("http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/user/get/password",{
+                                const data= await Axios.put("https://api.perisync.com/user/get/password",{
                                         "email" : details.email,
                                         "password": details.password
                                         })     
@@ -30,7 +43,8 @@ const Login = () => {
                                         setFname(data.data?.fname);
                                         setUserid(data.data?.userid);
                                         setImage(data.data?.image?.image);
-                                        setLoading(data.status)
+                                        setLoading(data.status);
+                                        setMission({...mission,loading:data.status,fname:data.data?.fname});
                             } catch (e){
                                 console.log(e);
                                 alert("wrong credentials")
@@ -39,6 +53,7 @@ const Login = () => {
                             console.log(fname);
                             console.log(userid);
                             console.log(loading);
+                            console.log("image:---",image);
                         }; 
                         FetchDetails();
         }
@@ -46,14 +61,27 @@ const Login = () => {
 
 
 
-
-
     return (
-        <>
-            {loading===200 ? (
+        <PackageContext.Provider
+        value={{
+            data:mission,
+            isMissionAccepted: () => {
+                setMission({...mission,loading:"1"})
+            }
+           
+        }}>
+            {mission.loading===200 ? (
                 <MainDashboard token={token} fname={fname} userid={userid} image={image}/>
             ):(
                 <div className="sign">
+                    {/* <PackageContext.Provider
+                            value={{
+                                data:mission
+                               
+                            }}
+                    >
+
+                    </PackageContext.Provider> */}
                 <div className="loginimage"><img src="dribbleimage.png" alt="pic" height="100%"/></div>
                 <div className="loginmain">
                     <div className="loginlink">not a member<Link>Signup now</Link></div>
@@ -76,14 +104,33 @@ const Login = () => {
                             <div><button className="loginButton"
                                 onClick={() => login() }
                             >Sign in</button></div>
+
+
+                            {/* reducer example */}
+                            <div>name:{props.myname}</div>
+                            <button onClick={() => {props.changeName("muqeem")}}>change it</button>
                         </div>
                         
                     </div>
                 </div>
             </div>
             )}
-        </>
+        </PackageContext.Provider>
     )
 }
 
-export default Login;
+
+// reducers
+const mapStateToProps = (state) => {
+    return{
+        myname:state.name
+    }
+}
+
+const mapDispatchToProps = (dispatch)=>{
+    
+    return{
+        changeName:(name) => {dispatch({type:'CHANGE_NAME',  payload:name})}
+    }
+}
+export default connect(mapStateToProps,mapDispatchToProps) (Login);

@@ -27,7 +27,7 @@ const Daycalender = (token,userid,fname,image) => {
                     console.log("daycal userid",userid);
                     try{
                         const data = await axios.put(
-                            " http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/admin/history/month",{
+                            " https://api.perisync.com/admin/history/month",{
                                 "token" : token.token,
                                 "userid": token.userid
                                 }

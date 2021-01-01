@@ -9,6 +9,7 @@ import { IoExitOutline } from 'react-icons/io5';
 import ImageUploader from 'react-images-upload';
 import MonthViews from './MonthViews';
 import AnotherviewForTable from './AnotherviewFortable';
+import Context from '../context/Context';
 
 const Calender = ({token,userid,fname,image}) => {
 
@@ -35,7 +36,7 @@ const Calender = ({token,userid,fname,image}) => {
         // console.log("image-----",image);s
         try{
             const data = await axios.put(
-                " http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/admin/history/tenants",{
+                "https://api.perisync.com/admin/history/tenants",{
                     "token" : token,
                     "userid": userid
                     }
@@ -69,7 +70,7 @@ const getmonthlyData = async () => {
     console.log("calender userid",userid);
     try{
         const data = await axios.put(
-            " http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/admin/history/tenants",{
+            " https://api.perisync.com/admin/history/tenants",{
                 "token" : token,
                 "userid": userid
                 }
@@ -140,7 +141,7 @@ const uploadImageToServer= async () => {
 
     try{
         const data = await axios.post(
-            " http://ec2-3-7-168-72.ap-south-1.compute.amazonaws.com:15010/user/store/img",
+            " https://api.perisync.com/user/store/img",
                 formData,
             // {
             //         headers: {
@@ -328,14 +329,16 @@ const uploadImageToServer= async () => {
                 </div>
             </div>
             <div className="calender3"><b>Task List</b></div>
-            <div className="calender4 calender3">July 1</div>
+            <div className="calender4 calender3">
+               hi
+            </div>
             <div className="calender5">
                 <div>
                     <button onClick={() => (setDisplayDayCalender(true))}>day </button>
                     <button onClick={() => (setDisplayDayCalender(false))}>month</button>
                 </div>
                 <div><b>Recent Screenshot / video</b> </div>
-                <div>day {displayDayCalender ? ("true") : ("false")}</div>
+                {/* <div>day {displayDayCalender ? ("true") : ("false")}</div> */}
 
                 {displayDayCalender ? (
                     <Daycalender token={token} userid={userid} fname={fname} image={image}/>
